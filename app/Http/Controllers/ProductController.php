@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Product;
 
 class ProductController extends Controller
 {
@@ -11,9 +12,11 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
-        return view('products.create');
+        $products = Product::all()->toArray();
+        return view('products.index', compact('products'));
     }
 
     /**
@@ -23,7 +26,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('products.create');// create content
     }
 
     /**
@@ -34,7 +37,14 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $product = $this->validate(request(), [
+            'title' => 'required',
+            'price' => 'required|numeric'
+        ]);
+
+        Product::create($product);
+
+        return back()->with('success', 'Product has been added');;
     }
 
     /**
@@ -56,7 +66,8 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $product = Product::find($id);
+        return view('products.edit',compact('product','id'));
     }
 
     /**
@@ -68,7 +79,15 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $product = Product::find($id);
+        $this->validate(request(), [
+            'title' => 'required',
+            'price' => 'required|numeric'
+        ]);
+        $product->title = $request->get('title');
+        $product->price = $request->get('price');
+        $product->save();
+        return redirect('products')->with('success','Product has been updated');
     }
 
     /**
@@ -79,6 +98,8 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $product = Product::find($id);
+        $product->delete();
+        return redirect('products')->with('success','Product has been  deleted');
     }
 }
