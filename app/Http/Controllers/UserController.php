@@ -15,8 +15,8 @@ class UserController extends Controller
 
     public function index()
     {
-        $products = User::all()->toArray();
-        return view('products.index', compact('products'));
+        $user = User::all()->toArray();
+        return view('user.index', compact('user'));
     }
 
     /**
