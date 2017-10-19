@@ -11,6 +11,7 @@
 |
 */
 Route::resource('products','ProductController');
+Route::resource('user','UserController');
 Route::get('/', function () {
     return view('welcome');
 });
