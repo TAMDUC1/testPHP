@@ -39,7 +39,8 @@ class UserController extends Controller
     {
         $user = $this->validate(request(), [
             'name' => 'required',
-            'email' => 'required'
+            'email' => 'required',
+            'password' => 'required'
         ]);
 
         User::create($user);
@@ -82,10 +83,12 @@ class UserController extends Controller
         $user = User::find($id);
         $this->validate(request(), [
             'name' => 'required',
-            'email' => 'required'
+            'email' => 'required',
+            'password'=>'required'
         ]);
         $user->name = $request->get('name');
         $user->email = $request->get('email');
+        $user->password = $request->get('password');
         $user->save();
         return redirect('user')->with('success','User has been updated');
     }
