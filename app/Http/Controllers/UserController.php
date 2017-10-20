@@ -44,7 +44,7 @@ class UserController extends Controller
 
         User::create($user);
 
-        return back()->with('success', 'User has been added');;
+        return back()->with('success', 'User has been added');
     }
 
     /**
