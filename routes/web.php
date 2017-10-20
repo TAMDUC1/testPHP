@@ -12,6 +12,7 @@
 */
 Route::resource('products','ProductController');
 Route::resource('user','UserController');
+Route::resource('cart','CartController');
 Route::get('/', function () {
     return view('welcome');
 });
